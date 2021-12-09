@@ -17,7 +17,7 @@ const CrudApi = () => {
     
     useEffect(() => {
         setLoading(true);
-        helpHttp().get(url).then((res) => { //if you put "api", this generate a warning
+        helpHttp().get(url).then((res) => { // if you put "api", this generate a warning
             if(!res.err){
                 setDb(res);
                 setError(null);
@@ -32,17 +32,60 @@ const CrudApi = () => {
 
     const createData = (data) => {
         data.id = Date.now();
-        setDb([...db, data]);
+        let options  = {
+            body: data,
+            headers:{
+                "content-type": "application/json"
+            }
+        }
+
+        api.post(url, options)
+            .then((res) => {
+                if(!res.err){
+                    setDb([...db, res]);
+                } else{
+                    setError(res);
+                }
+            });
     }
     const updateData = (data) => {
-        let  newData = db.map(el => el.id === data.id ? data : el);
-        setDb(newData);
+        let endpoint = `${url}/${data.id}`
+
+        let options  = {
+            body: data,
+            headers:{
+                "content-type": "application/json"
+            }
+        }
+
+        api.put(endpoint, options)
+            .then((res) => {
+                if(!res.err){
+                    let  newData = db.map(el => el.id === data.id ? data : el);
+                    setDb(newData);
+                } else{
+                    setError(res);
+                }
+            });
     }
     const deleteData = (id) => {
         let isDelete = window.confirm(`Are you sure to delete the player with id: ${id}`);
         if(isDelete){
-            let newData = db.filter(el => el.id !== id);
-            setDb(newData);
+            let endpoint = `${url}/${id}`;
+            let options  = {
+                headers:{
+                    "content-type": "application/json"
+                }
+            }
+            api.del(endpoint, options)
+            .then(res => {
+                if(!res.err){
+                    let newData = db.filter(el => el.id !== id);
+                    setDb(newData);
+                } else{
+                    setError(res);
+                }
+            });
         } else{
             return;
         }
@@ -50,7 +93,7 @@ const CrudApi = () => {
 
     return(
         <div>
-            <h2>Crud app</h2>
+            <h2>Crud Api</h2>
             <article className="grid-1-2">
                 <CrudForm createData={createData} updateData={updateData} dataToEdit={dataToEdit} setDataToEdit={setDataToEdit} />
                 {loading && <Loader />}
