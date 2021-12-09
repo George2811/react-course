@@ -1,0 +1,29 @@
+{
+    "players" : [
+        {
+            "id": 1,
+            "name": "Cr7",
+            "team":"Manchester United"
+        },
+        {
+            "id": 2,
+            "name": "Messi",
+            "team":"Psg"
+        },
+        {
+            "id": 3,
+            "name": "Mbappe",
+            "team":"Psg"
+        },
+        {
+            "id": 4,
+            "name": "Vinicius Jr",
+            "team":"Real Madrid"
+        },
+        {
+            "id": 5,
+            "name": "Salah",
+            "team":"Liverpool"
+        }
+    ]
+}
