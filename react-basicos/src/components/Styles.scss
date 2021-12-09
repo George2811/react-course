@@ -1,0 +1,13 @@
+// npm install node-sass to use Sass
+
+$sass-color: #bf4080;
+$sass-color-80: #bf408080;
+
+.bg-sass {
+    background-color: $sass-color;
+    transition: background-color .5s ease-in-out;
+
+    &:hover {
+        background-color: $sass-color-80;
+    }
+}
